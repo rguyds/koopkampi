@@ -1,0 +1,1 @@
+mongodb+srv://rguyds:bluestone@koopkampicluster.jmgxe.mongodb.net/KOOPKAMPICluster?authSource=admin&replicaSet=atlas-13ssfh-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true
