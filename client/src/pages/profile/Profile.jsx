@@ -37,7 +37,7 @@ export default function Profile() {
                 src={
                   user.coverPicture
                     ? PF + user.coverPicture
-                    : PF + "person/kkbanner2022.jpg"
+                    : PF + "/kkbanner2022.jpg"
                 }
                 alt=""
               />

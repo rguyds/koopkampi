@@ -3,11 +3,13 @@ import "./login.css";
 import { loginCall } from "../../apiCalls";
 import { AuthContext } from "../../context/AuthContext";
 import { CircularProgress } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 export default function Login() {
   const email = useRef();
   const password = useRef();
   const { isFetching, dispatch } = useContext(AuthContext);
+  const history = useHistory();
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -16,14 +18,17 @@ export default function Login() {
       dispatch
     );
   };
-
+  const onRegisterClick = (e) => {
+    e.preventDefault();
+    history.push("/register");
+  };
   return (
     <div className="login">
       <div className="loginWrapper">
         <div className="loginLeft">
           <h3 className="loginLogo">KOOPKAMPI</h3>
           <span className="loginDesc">
-            Connect with friends and the world around you on koopkampi.
+            Kakampi ng mga Nakakaligtaang Sektor ng Lipunan.
           </span>
         </div>
         <div className="loginRight">
@@ -31,14 +36,14 @@ export default function Login() {
             <input
               placeholder="Email"
               type="email"
-              required
+              // required
               className="loginInput"
               ref={email}
             />
             <input
               placeholder="Password"
               type="password"
-              required
+              // required
               minLength="6"
               className="loginInput"
               ref={password}
@@ -51,13 +56,14 @@ export default function Login() {
               )}
             </button>
             <span className="loginForgot">Forgot Password?</span>
-            <button className="loginRegisterButton">
+            <button className="loginRegisterButton" onClick={onRegisterClick}>
               {isFetching ? (
                 <CircularProgress color="white" size="20px" />
               ) : (
                 "Create a New Account"
               )}
-            </button>
+            </button>       
+            
           </form>
         </div>
       </div>

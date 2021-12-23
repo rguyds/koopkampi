@@ -38,14 +38,14 @@ export default function Register() {
         <div className="loginLeft">
           <h3 className="loginLogo">KOOPKAMPI</h3>
           <span className="loginDesc">
-            Connect with friends and the world around you on KOOPKAMPI.
+          Kakampi ng mga Nakakaligtaang Sektor ng Lipunan.
           </span>
         </div>
         <div className="loginRight">
           <form className="loginBox" onSubmit={handleClick}>
             <div >
                 <select 
-                required  
+                // required  
                 placeholder="Please select your group" 
                 className="loginInput"  
                 value={groupState} 
