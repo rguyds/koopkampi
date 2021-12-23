@@ -56,15 +56,19 @@ const UserSchema = new mongoose.Schema(
       type: String,
       max: 50,
     },
-    city: {
+    fullname: {
       type: String,
       max: 50,
     },
-    from: {
+    address: {
       type: String,
       max: 50,
     },
     civil: {
+      type: String,
+      max: 50
+    },
+    phone: {
       type: String,
       max: 50
     },

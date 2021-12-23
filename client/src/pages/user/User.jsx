@@ -8,30 +8,50 @@ import {
 } from "@material-ui/icons";
 import axios from "axios";
 import "./user.css";
-import { useContext, useState, version } from "react";
+import { useContext, useState} from "react";
 import { AuthContext } from "../../context/AuthContext";
 
 export default function User() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const {user} =  useContext(AuthContext);
+  const {user,dispatch} =  useContext(AuthContext);
 
   const [file, setFile] = useState(null);
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [fullname, setFullname] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+  const [Username, setUsername] = useState();
+  const [Email, setEmail] = useState("");
+  const [Fullname, setFullname] = useState("");
+  const [Phone, setPhone] = useState("");
+  const [Address, setAddress] = useState("");
   const [success, setSuccess] = useState(false);
- 
+  let onUsername = (e) => {
+    const newUsername = e.target.value;
+    setUsername(newUsername);
+  };
+  let onEmail = (e) => {
+    const newEmail = e.target.value;
+    setEmail(newEmail);
+  };
+  let onFullname = (e) => {
+    const newFullname = e.target.value;
+    setFullname(newFullname);
+  };
+  let onPhone = (e) => {
+    const newPhone = e.target.value;
+    setPhone(newPhone);
+  };
+  let onAddress = (e) => {
+    const newAddress = e.target.value;
+    setAddress(newAddress);
+  };
   const handleClick = async (e) => {
     e.preventDefault();
+    //dispatch({ type: "UPDATE_START" });
     const updatedUser = {
       userId: user._id,
-      username:  username.current.value,
-      email: email.current.value,
-      fullname: fullname.current.value,
-      phone: phone.current.value,
-      address: address.current.value,
+      username:  Username,
+      email: Email,
+      fullname: Fullname,
+      phone: Phone,
+      address: Address,
     };
     if (file) {
       const data = new FormData();
@@ -46,6 +66,7 @@ export default function User() {
     try {
       await axios.put("/users/" + user._id, updatedUser);
       setSuccess(true);
+      console.log(updatedUser);
     } catch (err) {
     }
   };
@@ -106,8 +127,9 @@ export default function User() {
                   type="text"
                   placeholder={user.username}
                   className="userUpdateInput"
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={onUsername}   
                 />
+                
               </div>
               <div className="userUpdateItem">
                 <label>Full Name</label>
@@ -115,8 +137,9 @@ export default function User() {
                   type="text"
                   placeholder={user.fullname}
                   className="userUpdateInput"
-                  onChange={(e) => setFullname(e.target.value)}
+                  onChange={onFullname}
                 />
+                
               </div>
               <div className="userUpdateItem">
                 <label>Email</label>
@@ -124,7 +147,7 @@ export default function User() {
                   type="text"
                   placeholder={user.email}
                   className="userUpdateInput"
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={onEmail}
                 />
               </div>
               <div className="userUpdateItem">
@@ -133,7 +156,7 @@ export default function User() {
                   type="text"
                   placeholder={user.phone}
                   className="userUpdateInput"
-                  onChange={(e) => setPhone(e.target.value)}
+                  onChange={onPhone}
                 />
               </div>
               <div className="userUpdateItem">
@@ -142,7 +165,7 @@ export default function User() {
                   type="text"
                   placeholder={user.address}
                   className="userUpdateInput"
-                  onChange={(e) => setAddress(e.target.value)}
+                  onChange={onAddress}
                 />
               </div>
             </div>
@@ -161,7 +184,7 @@ export default function User() {
               <button className="userUpdateButton" type="submit">Update</button>
               {success && (
                 <span
-                  style={{color:"green", textAlign:"center",margin:"20px"}}
+                  style={{color:"green", textAlign:"center",margin:"10px"}}
                   >
                     Profile has been updated...
                   </span>

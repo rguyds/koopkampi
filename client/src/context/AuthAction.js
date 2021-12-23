@@ -20,3 +20,12 @@ export const Unfollow = (userId) => ({
   type: "UNFOLLOW",
   payload: userId,
 });
+
+export const UpdateSuccess = (user) => ({
+  type: "UPDATE_SUCCESS",
+  payload: user,
+});
+
+export const UpdateFailure = () => ({
+  type: "UPDATE_FAILURE",
+});

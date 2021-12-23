@@ -11,9 +11,7 @@ export default function Rightbar({ user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [friends, setFriends] = useState([]);
   const { user: currentUser, dispatch } = useContext(AuthContext);
-  const [followed, setFollowed] = useState(
-    currentUser.followings.includes(user?.id)
-  );
+  const [followed, setFollowed] = useState(currentUser.followings.includes(user?.id));
 
   useEffect(() => {
     const getFriends = async () => {
@@ -33,6 +31,8 @@ export default function Rightbar({ user }) {
         await axios.put(`/users/${user._id}/unfollow`, {
           userId: currentUser._id,
         });
+        console.log(currentUser._id);
+
         dispatch({ type: "UNFOLLOW", payload: user._id });
       } else {
         await axios.put(`/users/${user._id}/follow`, {
@@ -77,15 +77,15 @@ export default function Rightbar({ user }) {
         <h4 className="rightbarTitle">User information</h4>
         <div className="rightbarInfo">
           <div className="rightbarInfoItem">
-            <span className="rightbarInfoKey">City:</span>
-            <span className="rightbarInfoValue">{user.city}</span>
+            <span className="rightbarInfoKey">Name:</span>
+            <span className="rightbarInfoValue">{user.fullname}</span>
           </div>
           <div className="rightbarInfoItem">
-            <span className="rightbarInfoKey">From:</span>
-            <span className="rightbarInfoValue">{user.from}</span>
+            <span className="rightbarInfoKey">Telephone:</span>
+            <span className="rightbarInfoValue">{user.phone}</span>
           </div>
           <div className="rightbarInfoItem">
-            <span className="rightbarInfoKey">Relationship:</span>
+            <span className="rightbarInfoKey">Status:</span>
             <span className="rightbarInfoValue">
               {user.relationship === 1
                 ? "Single"
