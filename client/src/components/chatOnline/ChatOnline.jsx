@@ -11,10 +11,12 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
     const getFriends = async () => {
       const res = await axios.get("/users/friends/" + currentId);
       setFriends(res.data);
+
     };
 
     getFriends();
   }, [currentId]);
+
 
   useEffect(() => {
     setOnlineFriends(friends.filter((f) => onlineUsers.includes(f._id)));

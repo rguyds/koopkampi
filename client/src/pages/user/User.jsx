@@ -10,6 +10,7 @@ import axios from "axios";
 import "./user.css";
 import { useContext, useState} from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { useHistory } from "react-router-dom";
 
 export default function User() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -22,6 +23,9 @@ export default function User() {
   const [Phone, setPhone] = useState("");
   const [Address, setAddress] = useState("");
   const [success, setSuccess] = useState(false);
+  const history = useHistory();
+  
+  console.log(user);
   let onUsername = (e) => {
     const newUsername = e.target.value;
     setUsername(newUsername);
@@ -44,7 +48,7 @@ export default function User() {
   };
   const handleClick = async (e) => {
     e.preventDefault();
-    //dispatch({ type: "UPDATE_START" });
+    dispatch({ type: "UPDATE_START" });
     const updatedUser = {
       userId: user._id,
       username:  Username,
@@ -65,9 +69,9 @@ export default function User() {
     }
     try {
       await axios.put("/users/" + user._id, updatedUser);
+      history.push("/profile/" + updatedUser.username);
       setSuccess(true);
-      console.log(updatedUser);
-    } catch (err) {
+      } catch (err) {
     }
   };
   return (
@@ -82,8 +86,12 @@ export default function User() {
         <div className="userShow">
           <div className="userShowTop">
             <img
-                 src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-              // src={PF + user.profilePicture}
+              //   src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+              src={
+                user.profilePicture
+                  ? PF + user.profilePicture
+                  : PF + "person/noAvatar.png"
+              }
               alt=""
               className="userShowImg"
             />
@@ -127,7 +135,7 @@ export default function User() {
                   type="text"
                   placeholder={user.username}
                   className="userUpdateInput"
-                  onChange={onUsername}   
+                  onChange={onUsername}
                 />
                 
               </div>
@@ -183,9 +191,7 @@ export default function User() {
               </div>
               <button className="userUpdateButton" type="submit">Update</button>
               {success && (
-                <span
-                  style={{color:"green", textAlign:"center",margin:"10px"}}
-                  >
+                <span style={{color:"green", textAlign:"center",margin:"10px"}}>
                     Profile has been updated...
                   </span>
               )}

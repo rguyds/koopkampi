@@ -1,5 +1,5 @@
 import "./topbar.css";
-import { Search, Person, Chat, Notifications } from "@material-ui/icons";
+import { Search, Person, Chat, Notifications, LaptopWindows } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
@@ -10,6 +10,7 @@ export default function Topbar() {
 
   const handleLogout = () => {
     dispatch({type: "LOGOUT"});
+    window.location.pathname = "/login";
   };
   return (
     <div className="topbarContainer">
@@ -30,7 +31,7 @@ export default function Topbar() {
       <div className="topbarRight">
         <div className="topbarLinks">
           <span className="topbarLink">Homepage</span>
-        <span className="topbarLink" onClick={handleLogout}>{user && "LOGOUT"}</span>
+        <span className="topbarLink" onClick={handleLogout}>{user ? "LOGOUT" :  ""}</span>
         </div>
         <div className="topbarIcons">
           <div className="topbarIconItem">
