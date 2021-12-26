@@ -38,6 +38,8 @@ const storage = multer.diskStorage({
   },
 });
 
+
+
 const upload = multer({ storage: storage });
 app.post("/api/upload", upload.single("file"), (req, res) => {
   try {
@@ -46,6 +48,8 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
     console.error(error);
   }
 });
+
+
 
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);

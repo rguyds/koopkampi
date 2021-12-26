@@ -8,24 +8,23 @@ import {
 } from "@material-ui/icons";
 import axios from "axios";
 import "./user.css";
-import { useContext, useState} from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useHistory } from "react-router-dom";
 
 export default function User() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const {user,dispatch} =  useContext(AuthContext);
-
+  const { user, dispatch } = useContext(AuthContext);
+  console.log(user);
   const [file, setFile] = useState(null);
-  const [Username, setUsername] = useState();
+  const [Username, setUsername] = useState("");
   const [Email, setEmail] = useState("");
   const [Fullname, setFullname] = useState("");
   const [Phone, setPhone] = useState("");
   const [Address, setAddress] = useState("");
   const [success, setSuccess] = useState(false);
   const history = useHistory();
-  
-  console.log(user);
+
   let onUsername = (e) => {
     const newUsername = e.target.value;
     setUsername(newUsername);
@@ -51,7 +50,7 @@ export default function User() {
     dispatch({ type: "UPDATE_START" });
     const updatedUser = {
       userId: user._id,
-      username:  Username,
+      username: Username,
       email: Email,
       fullname: Fullname,
       phone: Phone,
@@ -59,10 +58,11 @@ export default function User() {
     };
     if (file) {
       const data = new FormData();
-      const filename = data.now() + file.name;
+      const filename = Date.now() + file.name;
       data.append("name", filename);
       data.append("file", file);
       updatedUser.profilePicture = filename;
+      console.log(updatedUser)
       try {
         await axios.post("/upload", data);
       } catch (err) {}
@@ -71,8 +71,7 @@ export default function User() {
       await axios.put("/users/" + user._id, updatedUser);
       history.push("/profile/" + updatedUser.username);
       setSuccess(true);
-      } catch (err) {
-    }
+    } catch (err) {}
   };
   return (
     <div className="user">
@@ -137,7 +136,6 @@ export default function User() {
                   className="userUpdateInput"
                   onChange={onUsername}
                 />
-                
               </div>
               <div className="userUpdateItem">
                 <label>Full Name</label>
@@ -147,7 +145,6 @@ export default function User() {
                   className="userUpdateInput"
                   onChange={onFullname}
                 />
-                
               </div>
               <div className="userUpdateItem">
                 <label>Email</label>
@@ -187,13 +184,27 @@ export default function User() {
                 <label htmlFor="file">
                   <Publish className="userUpdateIcon" />
                 </label>
-                <input type="file" id="file" style={{ display: "none" }} />
+                <input
+                  type="file"
+                  id="file"
+                  style={{ display: "none" }}
+                  accept=".png,.jpeg,.jpg"
+                  onChange={(e) => setFile(e.target.files[0])}
+                />
               </div>
-              <button className="userUpdateButton" type="submit">Update</button>
+              <button className="userUpdateButton" type="submit">
+                Update
+              </button>
               {success && (
-                <span style={{color:"green", textAlign:"center",margin:"10px"}}>
-                    Profile has been updated...
-                  </span>
+                <span
+                  style={{
+                    color: "green",
+                    textAlign: "center",
+                    margin: "10px",
+                  }}
+                >
+                  Profile has been updated...
+                </span>
               )}
             </div>
           </form>

@@ -87,11 +87,12 @@ export default function Rightbar({ user }) {
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">Status:</span>
             <span className="rightbarInfoValue">
-              {user.relationship === 1
+              {/* {user.relationship === 1
                 ? "Single"
                 : user.relationship === 1
                 ? "Married"
-                : "-"}
+                : "-"} */}
+                {user.civil}
             </span>
           </div>
         </div>
