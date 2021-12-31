@@ -2,6 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import "./chatOnline.css";
 
+const axiosInstance = axios.create({
+  baseURL: process.env.REACT_APP_API_URL,
+});
 export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
   const [friends, setFriends] = useState([]);
   const [onlineFriends, setOnlineFriends] = useState([]);
@@ -9,7 +12,7 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
 
   useEffect(() => {
     const getFriends = async () => {
-      const res = await axios.get("/users/friends/" + currentId);
+      const res = await axiosInstance.get("/users/friends/" + currentId);
       setFriends(res.data);
 
     };

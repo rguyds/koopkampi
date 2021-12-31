@@ -9,14 +9,18 @@ import { useParams } from "react-router";
 // import UpdateProfile from "../updateprofile/UpdateProfile";
 import { Link } from "react-router-dom";
 
+
 export default function Profile() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [user, setUser] = useState([]);
   const username = useParams().username;
+  const axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+  });
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await axios.get(`/users?username=${username}`);
+      const res = await axiosInstance.get(`/users?username=${username}`);
       setUser(res.data);
     };
     fetchUser();

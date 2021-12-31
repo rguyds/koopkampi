@@ -24,6 +24,9 @@ export default function User() {
   const [Address, setAddress] = useState("");
   const [success, setSuccess] = useState(false);
   const history = useHistory();
+  const axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+  });
 
   let onUsername = (e) => {
     const newUsername = e.target.value;
@@ -64,11 +67,11 @@ export default function User() {
       updatedUser.profilePicture = filename;
       console.log(updatedUser)
       try {
-        await axios.post("/upload", data);
+        await axiosInstance.post("/upload", data);
       } catch (err) {}
     }
     try {
-      await axios.put("/users/" + user._id, updatedUser);
+      await axiosInstance.put("/users/" + user._id, updatedUser);
       history.push("/profile/" + updatedUser.username);
       setSuccess(true);
     } catch (err) {}

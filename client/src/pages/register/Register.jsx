@@ -11,6 +11,9 @@ export default function Register() {
   const passwordAgain = useRef();
   const history = useHistory();
   const [groupState, setgroupState] = useState(null);
+  const axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+  });
  
   const handleClick = async (e) => {
     e.preventDefault();
@@ -22,9 +25,10 @@ export default function Register() {
         username: username.current.value,
         email: email.current.value,
         password: password.current.value,
+        usercode: usercode,
       };
       try {
-        await axios.post("/auth/register", user);
+        await axiosInstance.post("/auth/register", user);
         history.push("/login");
       } catch (err) {
         console.log(err);
@@ -55,16 +59,16 @@ export default function Register() {
                     setgroupState(selectedGroup);                 
                     }}
                 >
-                       <option value="">Please select your group</option>
-                        <option value="task force kasanag">task force kasanag</option>
-                        <option value="multi sectoral aliance group">multi sectoral aliance group</option>
-                        <option value="cooperative members and advocate">cooperative members and advocate</option>
-                        <option value="phil. asso. of water district">phil. asso. of water district</option>
-                        <option value="alliance of pwd's members">alliance of pwd's members</option>
-                        <option value="transport group">transport group</option>
-                        <option value="knights of rizal">knights of rizal</option>
-                        <option value="sorsogon 1st district">sorsogon 1st district</option>
-                        <option value="sorsogon 2nd district">sorsogon 2nd district</option>
+                        <option key = "1" value="1">Please select your group</option>
+                        <option key = "2" value="task force kasanag">task force kasanag</option>
+                        <option key = "3"  value="multi sectoral aliance group">multi sectoral aliance group</option>
+                        <option key = "4"  value="cooperative members and advocate">cooperative members and advocate</option>
+                        <option key = "5"  value="phil. asso. of water district">phil. asso. of water district</option>
+                        <option key = "6"  value="alliance of pwd's members">alliance of pwd's members</option>
+                        <option key = "7"  value="transport group">transport group</option>
+                        <option key = "8"  value="knights of rizal">knights of rizal</option>
+                        <option key = "9"  value="sorsogon 1st district">sorsogon 1st district</option>
+                        <option key = "10"  value="sorsogon 2nd district">sorsogon 2nd district</option>
                 </select>
               
             </div>
